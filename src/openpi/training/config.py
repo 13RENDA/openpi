@@ -757,10 +757,10 @@ _CONFIGS = [
         name="pi05_b1k",
         model=pi0_config.Pi0Config(action_horizon=32, pi05=True),
         data=LeRobotB1KDataConfig(
-            repo_id="turning_on_radio",
+            repo_id="2026-challenge-demos",
             base_config=DataConfig(
                 data_cls=_lerobot_compat.LeRobotDataset,
-                dataset_root="/viscam/u/shiyuc/openpi/2026-challenge-demos/b1k/turning_on_radio",
+                dataset_root="/vision/group/behavior/2026-challenge-demos",
                 prompt_from_task=True,
                 dataset_kwargs={"tolerance_s": 5e-4},
             ),
@@ -769,8 +769,8 @@ _CONFIGS = [
         weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi05_base/params"),
         save_interval=10_000,
         num_train_steps=50_000,
-        assets_base_dir="./outputs/assets",
-        checkpoint_base_dir="./outputs/checkpoints",
+        assets_base_dir="/vision/u/shiyuc/openpi/outputs/assets",
+        checkpoint_base_dir="/vision/u/shiyuc/openpi/outputs/checkpoints",
     ),
     #
     # Fine-tuning Libero configs.
