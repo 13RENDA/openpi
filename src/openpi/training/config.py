@@ -771,6 +771,10 @@ _CONFIGS = [
         num_train_steps=50_000,
         assets_base_dir="/vision/u/shiyuc/openpi/outputs/assets",
         checkpoint_base_dir="/vision/u/shiyuc/openpi/outputs/checkpoints",
+        # Video decoding (HEVC, 3 cameras/sample) is CPU-bound and was the actual
+        # training bottleneck, not GPU compute — the default of 8 left most of the
+        # --cpus-per-task=32 SLURM allocation (train_b1k.sbatch.sh) idle.
+        num_workers=28,
     ),
     #
     # Fine-tuning Libero configs.

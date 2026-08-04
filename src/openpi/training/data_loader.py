@@ -147,6 +147,14 @@ def create_b1k_dataset(data_config: _config.DataConfig, action_horizon: int) -> 
         **dataset_kwargs,
     )
 
+    # b1k robot configs (see openpi.configs.robots.b1k) only ever read RGB camera
+    # features; depth videos are recorded but never consumed downstream. lerobot's
+    # DatasetReader.get_item decodes every entry in meta.video_keys unconditionally,
+    # so leaving depth features in place silently doubles the HEVC decode work (the
+    # actual training bottleneck) on every sample for frames nothing ever reads.
+    for key in dataset.meta.depth_keys:
+        dataset.meta.info.features.pop(key, None)
+
     if data_config.prompt_from_task:
         dataset = TransformedDataset(
             dataset, [_transforms.PromptFromLeRobotTask(_lerobot_compat.tasks_from_metadata(dataset_meta))]

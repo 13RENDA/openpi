@@ -1754,7 +1754,7 @@ wheels = [
 [[package]]
 name = "lerobot"
 version = "0.5.2"
-source = { git = "https://github.com/wensi-ai/lerobot?branch=release%2Fb1k#c43f58116b975ae79af62714e1417b38facd4e37" }
+source = { git = "https://github.com/wensi-ai/lerobot?branch=release%2Fb1k#436812bd8ee39b768c645c248c91f1330834e687" }
 dependencies = [
     { name = "cmake" },
     { name = "draccus" },
