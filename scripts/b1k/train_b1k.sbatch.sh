@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --job-name="b1k_openpi_train"
 #SBATCH --account=viscam
-#SBATCH --partition=viscam
+#SBATCH --partition=viscam-hi
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:h200:4
 #SBATCH --mem=1024G
 #SBATCH --cpus-per-task=32
-#SBATCH --time=5-00:00:00
+#SBATCH --time=8:00:00
 #SBATCH --output=/vision/u/shiyuc/openpi/outputs/viscam/openpi_%j.log
 #SBATCH --error=/vision/u/shiyuc/openpi/outputs/viscam/openpi_%j.log
 
@@ -70,7 +70,6 @@ XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run --no-sync scripts/b1k/train_b1k.py "$C
     --num_train_steps=100000 \
     --assets_base_dir="$RESULT_DIR/outputs/assets" \
     --checkpoint_base_dir="$RESULT_DIR/outputs/checkpoints" \
-    --num_workers=8 \
     "$@"
 
 echo "Job finished: $(date)"
