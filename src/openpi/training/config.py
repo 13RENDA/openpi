@@ -772,9 +772,13 @@ _CONFIGS = [
         assets_base_dir="/vision/u/shiyuc/openpi/outputs/assets",
         checkpoint_base_dir="/vision/u/shiyuc/openpi/outputs/checkpoints",
         # Video decoding (HEVC, 3 cameras/sample) is CPU-bound and was the actual
-        # training bottleneck, not GPU compute — the default of 8 left most of the
-        # --cpus-per-task=32 SLURM allocation (train_b1k.sbatch.sh) idle.
-        num_workers=28,
+        # training bottleneck, not GPU compute. 28 (near the --cpus-per-task=32
+        # SLURM allocation) caused an OOM on the cluster and a local hang: each
+        # spawn-mode worker re-imports the full jax/torch/lerobot stack, and each
+        # also runs its own ThreadPoolExecutor (up to 3 threads/item after the
+        # depth-decode fix below), so 28 workers oversubscribes 32 cores badly.
+        # 16 is a more conservative middle ground over the old default of 8.
+        num_workers=16,
     ),
     #
     # Fine-tuning Libero configs.
